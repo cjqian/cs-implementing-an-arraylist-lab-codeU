@@ -62,7 +62,7 @@ public class MyArrayList<E> implements List<E> {
 		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
 		}
-		// TODO: fill in the rest of this method
+
         //make sure we have enough room
         if (size >= array.length){
           	E[] bigger = (E[]) new Object[array.length * 2];
@@ -203,13 +203,15 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public E remove(int index) {
-        //if (index < 0 || index >= size){
-            //throw 
-        //}
-        // TODO: fill in this method.
+        //make sure index is ]valid
+        if (index < 0 || index >= size){
+            throw new IndexOutOfBoundsException();
+        }
        
+        //we will return this element
         E element = array[index];
 
+        //move all subsequent items forward in the array
         for (int i = index; i < size - 1; i++){
             array[i] = array[i + 1];
         }
@@ -235,6 +237,7 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public E set(int index, E element) {
+        //make sure index is valid
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
