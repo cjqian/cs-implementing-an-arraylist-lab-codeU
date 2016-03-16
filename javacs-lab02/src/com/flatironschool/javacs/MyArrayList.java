@@ -48,7 +48,7 @@ public class MyArrayList<E> implements List<E> {
 	public boolean add(E element) {
 		if (size >= array.length) {
 			// make a bigger array and copy over the elements
-			E[] bigger = (E[]) new Object[array.length * 2];
+		  	E[] bigger = (E[]) new Object[array.length * 2];
 			System.arraycopy(array, 0, bigger, 0, array.length);
 			array = bigger;
 		} 
@@ -63,6 +63,22 @@ public class MyArrayList<E> implements List<E> {
 			throw new IndexOutOfBoundsException();
 		}
 		// TODO: fill in the rest of this method
+        //make sure we have enough room
+        if (size >= array.length){
+          	E[] bigger = (E[]) new Object[array.length * 2];
+			System.arraycopy(array, 0, bigger, 0, array.length);
+			array = bigger;
+        }
+
+        //if we want to add in the middle of the array
+        if (index < size) {
+            for (int i = size; i > index; i --){
+                array[i] = array[i - 1];
+            }
+        }
+
+        array[index] = element;
+        size++;
 	}
 
 	@Override
@@ -112,7 +128,11 @@ public class MyArrayList<E> implements List<E> {
 	@Override
 	public int indexOf(Object target) {
 		// TODO: fill in this method
-		return 0;
+        for (int i = 0; i < size; i++){
+            if (equals(target, array[i])) return i;
+        }
+
+		return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -176,14 +196,27 @@ public class MyArrayList<E> implements List<E> {
 		if (index == -1) {
 			return false;
 		}
+
 		remove(index);
 		return true;
 	}
 
 	@Override
 	public E remove(int index) {
-		// TODO: fill in this method.
-		return null;
+        //if (index < 0 || index >= size){
+            //throw 
+        //}
+        // TODO: fill in this method.
+       
+        E element = array[index];
+
+        for (int i = index; i < size - 1; i++){
+            array[i] = array[i + 1];
+        }
+
+        size--;
+
+		return element;
 	}
 
 	@Override
@@ -202,8 +235,14 @@ public class MyArrayList<E> implements List<E> {
 
 	@Override
 	public E set(int index, E element) {
-		// TODO: fill in this method.
-		return null;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        E prev = array[index];
+        array[index] = element;
+        
+        return prev;
 	}
 
 	@Override
